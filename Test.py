@@ -1,0 +1,2 @@
+nxiwmaisk
+ print ("jsksmakams")
