@@ -7,16 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
-# ---------------- USER INPUT ----------------
-
 target = input("\nEnter target/star name: ").strip()
 mission = input("Enter mission [Kepler/TESS]: ").strip().lower()
 
 if mission not in ["kepler", "tess"]:
     print("Invalid mission.")
     raise SystemExit
-
-# ---------------- GET DATA ----------------
 
 print("\nSearching for light curve...")
 
@@ -34,22 +30,18 @@ lc = lc.remove_nans().normalize()
 # Downsample to keep computation small
 lc = lc.bin(time_bin_size=0.02)
 
-# ---------------- FIND PERIOD ----------------
-
 print("Finding orbital period...")
 
 periodogram = lc.to_periodogram(
     method="boxleastsquares",
-    minimum_period=0.4,
-    maximum_period=5,
+    minimum_period=0.4,#this value is super important. 
+    maximum_period=5, # ↑↑↑ if its too small you wilk get a error. too big? value skewed
     frequency_factor=20
 )
 
 period = periodogram.period_at_max_power
 
 print(f"Orbital period: {period.value:.4f} days")
-
-# ---------------- PHASE FOLD ----------------
 
 folded = lc.fold(period)
 
@@ -59,8 +51,6 @@ flux = folded.flux.value
 order = np.argsort(phase)
 phase = phase[order]
 flux = flux[order]
-
-# ---------------- FIND ECLIPSES ----------------
 
 # Find minima in the light curve
 peaks, _ = find_peaks(
@@ -84,8 +74,6 @@ secondary = min(depths)
 
 ratio = secondary / primary
 
-# ---------------- CLASSIFY ----------------
-
 if ratio < 0.45:
     classification = "EA — Algol-like"
 
@@ -95,11 +83,7 @@ elif ratio > 0.70:
 else:
     classification = "EB — Beta Lyrae-like"
 
-# ---------------- OUTPUT ----------------
-
-print("\n==============================")
 print(" ECLIPSING BINARY CLASSIFIER")
-print("==============================")
 
 print(f"Target:           {target}")
 print(f"Mission:          {mission.upper()}")
@@ -109,8 +93,6 @@ print(f"Secondary depth:  {secondary:.4f}")
 print(f"Depth ratio:      {ratio:.3f}")
 
 print(f"\nClassification: {classification}")
-
-# ---------------- PLOT ----------------
 
 plt.figure(figsize=(8, 5))
 plt.scatter(phase, flux, s=4)
