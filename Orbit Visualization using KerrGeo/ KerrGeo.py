@@ -36,29 +36,24 @@ if choice == "1":
           plt.show()
 
 elif choice == "2":
-  print("\n Constant Of Motion")
+    print("\nConstant Of Motion")
 
-  a = float(input("Blackhole spin"))
-  E = float(input("\nSpecific energy E: "))
-  Lz = float(input("Angular momentum Lz: "))
-  Q = float(input("Carter constant Q: "))
+    a = float(input("Blackhole spin: "))
+    E = float(input("Specific energy E: "))
+    Lz = float(input("Angular momentum Lz: "))
+    Q = float(input("Carter constant Q: "))
 
-  orbit = kg.StableOrbit.from_constants(a, E, Lz, Q)
-  print("\nOrbit created successfully\n")
-  print("Available properties:\n")
+    orbit = kg.StableOrbit.from_constants(a, E, Lz, Q)
 
-  public = []
+    print("\nOrbit created successfully\n")
 
-  for item in dir(orbit):
-    if not item.startswith("_"):
-      public.append(item)
+    print("Calculated orbital parameters:")
+    print(f"Semi-latus rectum (p): {orbit.p:.6f}")
+    print(f"Eccentricity (e):       {orbit.e:.6f}")
+    print(f"Inclination parameter (x): {orbit.x:.6f}")
 
-      for item in sorted(public):
-        print(item)
+    ans = input("\nPlot orbit? (y/n): ")
 
-        ans = input("\nPlot orbit? (y/n): ")
-        if ans.lower() == "y":
-          orbit.plot(0, 40)
-          plt.show()
-
-
+    if ans.lower() == "y":
+        orbit.plot(0, 40)
+        plt.show()
