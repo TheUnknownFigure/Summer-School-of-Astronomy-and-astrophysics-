@@ -39,6 +39,11 @@ if tpf is None:
 
 print("\nPixel file successfully loaded.")
 
+#Tpf = 3 D array
+#tpf.shape[1] → number of pixels in Y
+#tpf.shape[2] → number of pixels in X
+#tpf.time → observation times
+
 print(f"Target: {target}")
 print(f"Mission: {mission.upper()}")
 print(f"Pixel dimensions: {tpf.shape[1]} × {tpf.shape[2]}")
