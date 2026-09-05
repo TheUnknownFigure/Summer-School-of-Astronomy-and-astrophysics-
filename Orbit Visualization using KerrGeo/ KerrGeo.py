@@ -59,8 +59,8 @@ elif choice == "2":
     ans = input("\nPlot orbit? (y/n): ")
 
     if ans.lower() == "y":
-        orbit.plot(0, 40)
-        plt.show()
+        orbit.plot(0, 40)#the valuesmim those blackets wre values of Mino time. 
+        plt.show()#Basically, a chosen mathematical playback parameters which makes the orbital equations easier to work with
 elif choice == "2":
     print("\nConstant Of Motion")
 
